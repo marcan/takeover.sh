@@ -27,7 +27,7 @@ fi
 ./busybox mount -t sysfs sys sys
 if ! ./busybox mount -t devtmpfs dev dev; then
     ./busybox mount -t tmpfs dev dev
-    ./busybox cp -a /dev/ dev/
+    ./busybox cp -a /dev/* dev/
     ./busybox rm -rf dev/pts
     ./busybox mkdir dev/pts
 fi
