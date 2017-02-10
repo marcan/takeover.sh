@@ -9,6 +9,7 @@ cd "$TO"
 
 if [ ! -e fakeinit ]; then
     ./busybox echo "Please compile fakeinit.c first"
+    exit 1
 fi
 
 ./busybox echo "Please set a root password for sshd"
