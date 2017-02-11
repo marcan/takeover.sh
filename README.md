@@ -81,3 +81,20 @@ begin with.
 
 When you're done, unmount all filesystems, then `reboot -f` or `echo b >
 /proc/sysrq-trigger` and cross your fingers.
+
+## Further reading
+
+I've been pointed to
+[this StackExchange answer](http://unix.stackexchange.com/questions/226872/how-to-shrink-root-filesystem-without-booting-a-livecd/227318#227318)
+which details how to manually perform a similar process, but using a subset of
+the existing root filesystem instead of a rescue filesystem. This allows you
+to keep (a new copy of) the existing init system running, as well as essential
+daemons, and then go back to the original root filesystem once you're done. This
+is a more useful version if, for example, you want to resize the original root
+filesystem or re-configure disk partitions, but not actually install a different
+distro, and you want to avoid rebooting at all.
+
+`takeover.sh` could be extended to support re-execing a new init once you're
+done. This could be used to switch to a *new* distro entirely without
+rebooting, as long as you're happy using the old kernel. If you're interested,
+pull requests welcome :-).
