@@ -28,9 +28,10 @@ handholding, this script is not for you.
 
 ## Compatibility
 
-This script is designed for systems using sysvinit that support the `telinit u`
-command to reload `/sbin/init`. If your system uses something else, you will
-have to adapt it, or this might not work at all. You're on your own here.
+This script is designed for init systems that support the `telinit u` command to
+reload the init binary. This includes sysvinit and systemd. If your init system
+works a different way, you will have to adapt it, or this might not work at
+all. You're on your own here.
 
 You should always test this in a VM first. You can grab a tarball of your live
 root filesystem, extract it into a VM image, get your VM up and running (boot

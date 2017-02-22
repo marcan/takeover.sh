@@ -2,6 +2,7 @@
 set -e
 
 TO=/takeover
+OLD_INIT=$(readlink /proc/1/exe)
 PORT=80
 
 cd "$TO"
@@ -46,7 +47,7 @@ if [ "$a" != "OK" ] ; then
 fi
 
 ./busybox echo "Preparing init..."
-./busybox cat >tmp/init <<EOF
+./busybox cat >tmp/${OLD_INIT##*/} <<EOF
 #!${TO}/busybox sh
 
 exec <"${TO}/${TTY}" >"${TO}/${TTY}" 2>"${TO}/${TTY}"
@@ -54,11 +55,12 @@ cd "${TO}"
 
 ./busybox echo "Init takeover successful"
 ./busybox echo "Pivoting root..."
+./busybox mount --make-rprivate /
 ./busybox pivot_root . old_root
 ./busybox echo "Chrooting and running init..."
 exec ./busybox chroot . /fakeinit
 EOF
-./busybox chmod +x tmp/init
+./busybox chmod +x tmp/${OLD_INIT##*/}
 
 ./busybox echo "Starting secondary sshd"
 
@@ -78,7 +80,7 @@ fi
 ./busybox echo "You may then kill the remnants of this session and any remaining"
 ./busybox echo "processes from your new SSH session, and umount the old root filesystem."
 
-./busybox mount --bind tmp/init /sbin/init
+./busybox mount --bind tmp/${OLD_INIT##*/} ${OLD_INIT}
 
 telinit u
 
