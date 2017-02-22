@@ -2,7 +2,6 @@
 set -e
 
 TO=/takeover
-OLD_TELINIT=/sbin/telinit
 PORT=80
 
 cd "$TO"
@@ -47,7 +46,6 @@ if [ "$a" != "OK" ] ; then
 fi
 
 ./busybox echo "Preparing init..."
-./busybox cp $OLD_TELINIT tmp/telinit
 ./busybox cat >tmp/init <<EOF
 #!${TO}/busybox sh
 
@@ -80,9 +78,9 @@ fi
 ./busybox echo "You may then kill the remnants of this session and any remaining"
 ./busybox echo "processes from your new SSH session, and umount the old root filesystem."
 
-./busybox mount --bind tmp /sbin
+./busybox mount --bind tmp/init /sbin/init
 
-./tmp/telinit u
+telinit u
 
 ./busybox sleep 10
 
