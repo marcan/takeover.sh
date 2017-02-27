@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# https://github.com/marcan/takeover.sh
+
 set -e
 
 TO=/takeover
@@ -41,7 +44,7 @@ exec <"$TO/$TTY" >"$TO/$TTY" 2>"$TO/$TTY"
 
 ./busybox echo "Type 'OK' to continue"
 ./busybox echo -n "> "
-read a
+read -r a
 if [ "$a" != "OK" ] ; then
     exit 1
 fi
@@ -58,6 +61,7 @@ cd "${TO}"
 ./busybox mount --make-rprivate /
 ./busybox pivot_root . old_root
 ./busybox echo "Chrooting and running init..."
+# shellcheck disable=SC2094
 exec ./busybox chroot . /fakeinit
 EOF
 ./busybox chmod +x tmp/${OLD_INIT##*/}
@@ -70,7 +74,7 @@ EOF
 ./busybox echo "You should SSH into the secondary sshd now."
 ./busybox echo "Type OK to continue"
 ./busybox echo -n "> "
-read a
+read -r a
 if [ "$a" != "OK" ] ; then
     exit 1
 fi
@@ -85,4 +89,3 @@ fi
 telinit u
 
 ./busybox sleep 10
-
