@@ -80,7 +80,7 @@ and similar before you can safely repartition your disk and install Gentoo
 Linux, which is of course the whole reason you're doing this crazy thing to
 begin with. 
 
-When you're done, unmount all filesystems, then `reboot -f` or `echo b >
+When you're done, unmount all filesystems, `sync`, then `reboot -f` or `echo b >
 /proc/sysrq-trigger` and cross your fingers.
 
 ## Further reading
