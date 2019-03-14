@@ -8,7 +8,7 @@ int main()
 	sigset_t set;
 	int status, i;
 
-	for (i = 0; i < 64; i++)
+	for (i = 0; i < 1024; i++)
 		close(i);
 
 	if (getpid() != 1) return 1;
