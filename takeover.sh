@@ -31,7 +31,7 @@ if ! ./busybox mount -t devtmpfs dev dev; then
     ./busybox rm -rf dev/pts
     ./busybox mkdir dev/pts
 fi
-./busybox mount -t devpts devpts dev/pts
+./busybox mount --bind /dev/pts dev/pts
 
 TTY="$(./busybox tty)"
 
